@@ -51,7 +51,7 @@ button:hover {
   margin-bottom: 30px;
 }
 
-.form-control {
+form {
   display: flex;
   flex-direction: row;
   gap: 20px;

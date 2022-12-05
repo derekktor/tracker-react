@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const Pomodoro = () => {
-    const [seconds, setSeconds] = useState(60);
     const [timeLeft, setTimeLeft] = useState({
         hours: 0,
         minutes: 0,
@@ -37,10 +36,7 @@ const Pomodoro = () => {
      * @param {int} seconds 
      */
     const displayTimeLeft = (seconds) => {
-        // Separate minutes and seconds
         const timeObj = separateTime(seconds);
-
-        // Change for better visibility
         const timeStr = stringifyTime(timeObj);
 
         const display = timeStr.h + ":" + timeStr.m + ":" + timeStr.s;
@@ -58,10 +54,15 @@ const Pomodoro = () => {
      * @returns int
      */
     const parseInput = (text) => {
-        const timeParts = text.split(" ");
+        const timeParts = text.trim().split(" ");
         let h = 0;
         let m = 0;
         let s = 0;
+
+        // Check if string contains letters
+        if (/[a-z]/i.test(text)) {
+            alert("Please do not enter any letters!");
+        }
 
         if (timeParts.length === 3) {
             h = parseInt(timeParts[0]);
@@ -83,7 +84,9 @@ const Pomodoro = () => {
      * Event handler that fires when user enters a custom time and clicks the submit button next to it
      * Firstly, parses the amount of time entered and then displays it
      */
-    const handleInput = () => {
+    const handleInput = (e) => {
+        e.preventDefault();
+
         // Get user input in seconds
         let seconds = parseInput(document.querySelector("#userInput").value);
 
@@ -93,10 +96,10 @@ const Pomodoro = () => {
 
     return (
         <div className="pomodoro-container">
-            <div className="form-control">
+            <form>
                 <input id="userInput" type="text" />
-                <button onClick={handleInput}>Submit</button>
-            </div>
+                <button type="submit" onClick={handleInput}>Submit</button>
+            </form>
             <h1>
                 {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
             </h1>
