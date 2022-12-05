@@ -7,18 +7,18 @@ import Pomodoro from "./components/Pomodoro";
 
 function App() {
     return (
-        <div className="App">
-            <Header />
-            <main>
-                <Router>
+        <Router>
+            <div className="app">
+                <Header />
+                <main>
                     <Routes>
-                        <Route path="/" element={<Home/>} />
-                        <Route path="/timer" element={<Pomodoro/>} />
+                        <Route path="/" element={<Home />} />
+                        <Route path="/pomodoro" element={<Pomodoro />} />
                     </Routes>
-                </Router>
-            </main>
-            <Footer />
-        </div>
+                </main>
+                <Footer />
+            </div>
+        </Router>
     );
 }
 
