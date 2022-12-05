@@ -4,6 +4,7 @@ import Header from "./common/Header";
 import Home from "./common/Home";
 import Footer from "./common/Footer";
 import Pomodoro from "./components/Pomodoro";
+import Tasks from "./components/Tasks";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/pomodoro" element={<Pomodoro />} />
+                        <Route path="/tasks" element={<Tasks />} />
                     </Routes>
                 </main>
                 <Footer />
