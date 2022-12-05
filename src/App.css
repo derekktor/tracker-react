@@ -18,7 +18,7 @@ button {
   padding: 5px 20px;
   border: 1px solid lightslategray;
   cursor: pointer;
-  transition: .2s all ease-in-out;
+  transition: .1s all ease-in-out;
 }
 
 button:hover {
@@ -51,10 +51,17 @@ button:hover {
   margin-bottom: 30px;
 }
 
+.form-control {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
 .buttons {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  gap: 10px;
 }
 
 .footer {
