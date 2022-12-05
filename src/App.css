@@ -13,18 +13,49 @@ a:hover {
   color: var(--dgreen);
 }
 
+button {
+  background-color: white;
+  padding: 5px 20px;
+  border: 1px solid lightslategray;
+  cursor: pointer;
+  transition: .2s all ease-in-out;
+}
+
+button:hover {
+  background-color: var(--dgreen);
+  color: white;
+}
+
 .app {
   width: 80vw;
   margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.app > * {
+  border: 1px solid black;
 }
 
 .header {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  border: 1px solid black;
+}
+
+.pomodoro-container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
 }
 
 .footer {
-  border: 1px solid black;
 }

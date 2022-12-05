@@ -1,12 +1,16 @@
-import React from 'react'
-import { Route } from "react-router-dom";
+import React from "react";
 
 const Pomodoro = () => {
-  return (
-    <div>
-        <h1>10:00</h1>
-    </div>
-  )
-}
+    return (
+        <div className="pomodoro-container">
+            <h1>10:00</h1>
+            <div className="buttons">
+                <button>Start</button>
+                <button>Stop</button>
+                <button>Reset</button>
+            </div>
+        </div>
+    );
+};
 
-export default Pomodoro
+export default Pomodoro;
