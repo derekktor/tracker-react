@@ -2,11 +2,6 @@ import { useState, useRef } from "react";
 
 const Pomodoro = () => {
     const [seconds, setSeconds] = useState(0);
-    const [timeLeft, setTimeLeft] = useState({
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-    });
     const timerId = useRef();
 
     /**
@@ -79,6 +74,9 @@ const Pomodoro = () => {
         document.querySelector("#userInput").value = "";
     };
 
+    /**
+     * Decrements state variable _seconds_ and shows alert when finished
+     */
     const startTimer = () => {
         timerId.current = setInterval(() => {
             setSeconds((prev) => {
@@ -88,16 +86,22 @@ const Pomodoro = () => {
                     clearInterval(timerId.current);
                     alert("Time's up!")
                 }
-                
+
                 return prev;
             });
         }, 1000);
     };
 
+    /**
+     * Stops timer
+     */
     const stopTimer = () => {
         clearInterval(timerId.current);
     };
 
+    /**
+     * Resets timer
+     */
     const resetTimer = () => {
         clearInterval(timerId.current);
         setSeconds(prev => 0);
@@ -105,12 +109,12 @@ const Pomodoro = () => {
 
     return (
         <div className="pomodoro-container">
-            <form>
+            <section>
                 <input id="userInput" type="text" />
                 <button type="submit" onClick={handleUserInput}>
                     Submit
                 </button>
-            </form>
+            </section>
             <h1>
                 {stringifyTime(separateTime(seconds))}
             </h1>

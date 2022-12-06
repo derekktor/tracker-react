@@ -53,8 +53,15 @@ button:hover {
 
 form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
+  margin: 20px;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .buttons {
