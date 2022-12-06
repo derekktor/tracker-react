@@ -17,6 +17,7 @@ button {
   background-color: white;
   padding: 5px 20px;
   border: 1px solid lightslategray;
+  border-radius: 20px;
   cursor: pointer;
   transition: .1s all ease-in-out;
 }
@@ -72,4 +73,7 @@ form {
 }
 
 .footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
