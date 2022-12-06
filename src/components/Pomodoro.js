@@ -1,8 +1,14 @@
 import { useState, useRef } from "react";
+import { Navigate } from "react-router-dom";
 
 const Pomodoro = () => {
     const [seconds, setSeconds] = useState(0);
+    const [isFinished, setIsFinished] = useState(false);
     const timerId = useRef();
+
+    if (isFinished) {
+        return <Navigate to="/task/add"/>
+    }
 
     /**
      * Extracts the number of hours, minutes, seconds in a total number of seconds
@@ -84,7 +90,7 @@ const Pomodoro = () => {
                     prev -= 1;
                 } else {
                     clearInterval(timerId.current);
-                    alert("Time's up!")
+                    setIsFinished(true);
                 }
 
                 return prev;
@@ -109,12 +115,12 @@ const Pomodoro = () => {
 
     return (
         <div className="pomodoro-container">
-            <section>
+            <form>
                 <input id="userInput" type="text" />
                 <button type="submit" onClick={handleUserInput}>
                     Submit
                 </button>
-            </section>
+            </form>
             <h1>
                 {stringifyTime(separateTime(seconds))}
             </h1>
