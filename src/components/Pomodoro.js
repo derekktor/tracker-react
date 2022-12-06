@@ -1,13 +1,12 @@
 import { useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 
-const Pomodoro = () => {
+const Pomodoro = ({ changeTimeStarted }) => {
     const [seconds, setSeconds] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
     const timerId = useRef();
-
     if (isFinished) {
-        return <Navigate to="/task/add"/>
+        return <Navigate to="/task/add" />;
     }
 
     /**
@@ -84,6 +83,11 @@ const Pomodoro = () => {
      * Decrements state variable _seconds_ and shows alert when finished
      */
     const startTimer = () => {
+        let d = new Date();
+        let date = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+        let time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+        changeTimeStarted(`${date} ${time}`);
+
         timerId.current = setInterval(() => {
             setSeconds((prev) => {
                 if (prev > 0) {
@@ -110,8 +114,8 @@ const Pomodoro = () => {
      */
     const resetTimer = () => {
         clearInterval(timerId.current);
-        setSeconds(prev => 0);
-    }
+        setSeconds((prev) => 0);
+    };
 
     return (
         <div className="pomodoro-container">
@@ -121,9 +125,7 @@ const Pomodoro = () => {
                     Submit
                 </button>
             </form>
-            <h1>
-                {stringifyTime(separateTime(seconds))}
-            </h1>
+            <h1>{stringifyTime(separateTime(seconds))}</h1>
             <div className="buttons">
                 <button onClick={startTimer}>Start</button>
                 <button onClick={stopTimer}>Stop</button>
