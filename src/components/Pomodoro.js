@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const Pomodoro = () => {
+    const [seconds, setSeconds] = useState(0);
     const [timeLeft, setTimeLeft] = useState({
         hours: 0,
         minutes: 0,
         seconds: 0,
     });
+    const timerId = useRef();
 
     /**
      * Extracts the number of hours, minutes, seconds in a total number of seconds
@@ -28,24 +30,7 @@ const Pomodoro = () => {
         const hours = `${timeObj.hours < 10 ? "0" : ""}${timeObj.hours}`;
         const minutes = `${timeObj.minutes < 10 ? "0" : ""}${timeObj.minutes}`;
         const seconds = `${timeObj.seconds < 10 ? "0" : ""}${timeObj.seconds}`;
-        return { hours, minutes, seconds };
-    };
-
-    /**
-     * Updates the state variable _timeLeft_ and thus updating the time left display
-     * @param {int} seconds 
-     */
-    const displayTimeLeft = (seconds) => {
-        const timeObj = separateTime(seconds);
-        const timeStr = stringifyTime(timeObj);
-
-        const display = timeStr.h + ":" + timeStr.m + ":" + timeStr.s;
-
-        // Update the title
-        document.title = display;
-
-        // Update body element
-        setTimeLeft(timeStr);
+        return `${hours}:${minutes}:${seconds}`;
     };
 
     /**
@@ -74,39 +59,65 @@ const Pomodoro = () => {
         } else if (timeParts.length === 1) {
             s = parseInt(timeParts[0]);
         } else {
-            alert("Must be in format: [hour minute second]")
+            alert("Must be in format: [hour minute second]");
         }
 
         return h * 3600 + m * 60 + s;
-    }
+    };
 
     /**
      * Event handler that fires when user enters a custom time and clicks the submit button next to it
      * Firstly, parses the amount of time entered and then displays it
      */
-    const handleInput = (e) => {
+    const handleUserInput = (e) => {
         e.preventDefault();
 
-        // Get user input in seconds
-        let seconds = parseInput(document.querySelector("#userInput").value);
+        // Read user's input and change number of seconds remaining
+        setSeconds(parseInput(document.querySelector("#userInput").value));
 
-        // Update time display
-        displayTimeLeft(seconds);
+        // Clear field
+        document.querySelector("#userInput").value = "";
     };
+
+    const startTimer = () => {
+        timerId.current = setInterval(() => {
+            setSeconds((prev) => {
+                if (prev > 0) {
+                    prev -= 1;
+                } else {
+                    clearInterval(timerId.current);
+                    alert("Time's up!")
+                }
+                
+                return prev;
+            });
+        }, 1000);
+    };
+
+    const stopTimer = () => {
+        clearInterval(timerId.current);
+    };
+
+    const resetTimer = () => {
+        clearInterval(timerId.current);
+        setSeconds(prev => 0);
+    }
 
     return (
         <div className="pomodoro-container">
             <form>
                 <input id="userInput" type="text" />
-                <button type="submit" onClick={handleInput}>Submit</button>
+                <button type="submit" onClick={handleUserInput}>
+                    Submit
+                </button>
             </form>
             <h1>
-                {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}
+                {stringifyTime(separateTime(seconds))}
             </h1>
             <div className="buttons">
-                <button>Start</button>
-                <button>Stop</button>
-                <button>Reset</button>
+                <button onClick={startTimer}>Start</button>
+                <button onClick={stopTimer}>Stop</button>
+                <button onClick={resetTimer}>Reset</button>
             </div>
         </div>
     );
