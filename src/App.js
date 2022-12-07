@@ -42,8 +42,22 @@ function App() {
         },
     ]);
 
+    /**
+     * Sets the time started for a given task
+     * @param {string} data time value that is passed from Pomodoro component
+     */
     const handleTimeChange = (data) => {
         setTime(data);
+    };
+
+    /**
+     * Deletes a given task from the list of tasks
+     * @param {integer} id unique ID for a given task
+     */
+    const handleDeleteTask = (id) => {
+        console.log("Deleting task...", id);
+        const newTasks = tasks.filter((task) => task.id !== id)
+        setTasks(newTasks);
     };
 
     return (
@@ -62,12 +76,18 @@ function App() {
                             }
                         />
                         <Route path="/test" element={<Test />} />
-                        <Route path="/tasks" element={<Tasks tasks={tasks}/>} />
+                        <Route
+                            path="/tasks"
+                            element={
+                                <Tasks
+                                    tasks={tasks}
+                                    onDelete={handleDeleteTask}
+                                />
+                            }
+                        />
                         <Route
                             path="/task/add"
-                            element={
-                                <AddTask timeStarted={time} />
-                            }
+                            element={<AddTask timeStarted={time} />}
                         />
                     </Routes>
                 </main>

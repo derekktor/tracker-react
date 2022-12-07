@@ -79,6 +79,13 @@ form {
   border-radius: 10px;
 }
 
+.flex-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .buttons {
   display: flex;
   flex-flow: row wrap;
