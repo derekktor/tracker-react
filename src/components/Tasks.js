@@ -1,11 +1,20 @@
-import React from 'react'
+import Task from "./Task";
+import React from "react";
 
-const Tasks = () => {
-  return (
-    <div>
-        <h1>Tasks</h1>
-    </div>
-  )
-}
+const Tasks = ({ tasks }) => {
+    return (
+        <div>
+            <h1>Tasks</h1>
+            <div className="tasks-container">
+                {tasks.map((task) => (
+                    // <div key={task.id} className="task">
+                    //     <h4>{task.title}</h4>
+                    // </div>
+                    <Task key={task.id} task={task} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
-export default Tasks
+export default Tasks;

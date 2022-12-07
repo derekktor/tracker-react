@@ -65,6 +65,20 @@ form {
   gap: 5px;
 }
 
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px;
+}
+
+.task {
+  background-color: var(--dgreen);
+  color: white;
+  padding: 5px 20px;
+  border-radius: 10px;
+}
+
 .buttons {
   display: flex;
   flex-flow: row wrap;

@@ -11,6 +11,36 @@ import Test from "./components/Test";
 
 function App() {
     const [time, setTime] = useState("default");
+    const [tasks, setTasks] = useState([
+        {
+            id: 1,
+            title: "reading",
+            desc: "Atomic Habits",
+            createdAt: "2022/10/01 10:30",
+            finishedAt: "2022/10/01 12:30",
+        },
+        {
+            id: 2,
+            title: "exercise",
+            desc: "shadow boxing",
+            createdAt: "2022/10/01 10:30",
+            finishedAt: "2022/10/01 12:30",
+        },
+        {
+            id: 3,
+            title: "meditation",
+            desc: "box breathing",
+            createdAt: "2022/10/01 10:30",
+            finishedAt: "2022/10/01 12:30",
+        },
+        {
+            id: 4,
+            title: "outreach",
+            desc: "20",
+            createdAt: "2022/10/01 10:30",
+            finishedAt: "2022/10/01 12:30",
+        },
+    ]);
 
     const handleTimeChange = (data) => {
         setTime(data);
@@ -32,7 +62,7 @@ function App() {
                             }
                         />
                         <Route path="/test" element={<Test />} />
-                        <Route path="/tasks" element={<Tasks />} />
+                        <Route path="/tasks" element={<Tasks tasks={tasks}/>} />
                         <Route
                             path="/task/add"
                             element={
