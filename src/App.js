@@ -18,6 +18,7 @@ function App() {
             desc: "Atomic Habits",
             createdAt: "2022/10/01 10:30",
             finishedAt: "2022/10/01 12:30",
+            isActive: false,
         },
         {
             id: 2,
@@ -25,6 +26,7 @@ function App() {
             desc: "shadow boxing",
             createdAt: "2022/10/01 10:30",
             finishedAt: "2022/10/01 12:30",
+            isActive: false,
         },
         {
             id: 3,
@@ -32,6 +34,7 @@ function App() {
             desc: "box breathing",
             createdAt: "2022/10/01 10:30",
             finishedAt: "2022/10/01 12:30",
+            isActive: false,
         },
         {
             id: 4,
@@ -39,6 +42,7 @@ function App() {
             desc: "20",
             createdAt: "2022/10/01 10:30",
             finishedAt: "2022/10/01 12:30",
+            isActive: false,
         },
     ]);
 
@@ -56,8 +60,16 @@ function App() {
      */
     const handleDeleteTask = (id) => {
         console.log("Deleting task...", id);
-        const newTasks = tasks.filter((task) => task.id !== id)
+        const newTasks = tasks.filter((task) => task.id !== id);
         setTasks(newTasks);
+    };
+
+    const handleToggleActive = (id) => {
+        console.log("Toggling task...", id);
+        const newTasks = tasks.map((task) => 
+            task.id === id ? { ...task, isActive: !task.isActive } : task
+        );
+        setTasks(newTasks)
     };
 
     return (
@@ -79,10 +91,15 @@ function App() {
                         <Route
                             path="/tasks"
                             element={
-                                <Tasks
-                                    tasks={tasks}
-                                    onDelete={handleDeleteTask}
-                                />
+                                tasks.length > 0 ? (
+                                    <Tasks
+                                        tasks={tasks}
+                                        onDelete={handleDeleteTask}
+                                        onToggle={handleToggleActive}
+                                    />
+                                ) : (
+                                    <h2>You have no tasks!</h2>
+                                )
                             }
                         />
                         <Route
