@@ -65,10 +65,19 @@ function App() {
         setTasks(newTasks);
     };
 
-    const handleAddTask = (task) => {
+    const handleAddTask = async (task) => {
         console.log("Adding task", task);
-        const id = Math.floor(Math.random() * 100);
-        const newTask = { id, ...task };
+
+        const res = await fetch(DB_URL + "/tasks", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(task)
+        })
+
+        const newTask = await res.json();
+
         const newTasks = [...tasks, newTask];
         setTasks(newTasks);
     };

@@ -13,6 +13,7 @@ const Task = ({ task, onDelete, onToggle }) => {
                     onClick={() => onDelete(task.id)}
                 />
             </div>
+            <p><i>{task.desc}</i></p>
             <p>{task.createdAt}</p>
             <p>{task.finishedAt}</p>
         </div>
