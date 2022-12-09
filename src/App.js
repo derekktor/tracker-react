@@ -46,8 +46,13 @@ function App() {
      * Deletes a given task from the list of tasks
      * @param {integer} id unique ID for a given task
      */
-    const handleDeleteTask = (id) => {
+    const handleDeleteTask = async (id) => {
         console.log("Deleting task...", id);
+
+        await fetch(DB_URL + `/tasks/${id}`, {
+            method: "DELETE",
+        })
+
         const newTasks = tasks.filter((task) => task.id !== id);
         setTasks(newTasks);
     };
