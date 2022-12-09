@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./common/Header";
 import Home from "./common/Home";
 import Footer from "./common/Footer";
@@ -9,47 +9,31 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import Test from "./components/Test";
 
+const DB_URL = "http://localhost:5000";
+
 function App() {
     let d = new Date();
     let date_ = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
     let time_ = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 
     const [time, setTime] = useState(`${date_} ${time_}`);
-    const [tasks, setTasks] = useState([
-        {
-            id: 1,
-            title: "reading",
-            desc: "Atomic Habits",
-            createdAt: "2022/10/01 10:30",
-            finishedAt: "2022/10/01 12:30",
-            isActive: false,
-        },
-        {
-            id: 2,
-            title: "exercise",
-            desc: "shadow boxing",
-            createdAt: "2022/10/01 10:30",
-            finishedAt: "2022/10/01 12:30",
-            isActive: false,
-        },
-        {
-            id: 3,
-            title: "meditation",
-            desc: "box breathing",
-            createdAt: "2022/10/01 10:30",
-            finishedAt: "2022/10/01 12:30",
-            isActive: false,
-        },
-        {
-            id: 4,
-            title: "outreach",
-            desc: "20",
-            createdAt: "2022/10/01 10:30",
-            finishedAt: "2022/10/01 12:30",
-            isActive: false,
-        },
-    ]);
+    const [tasks, setTasks] = useState([]);
 
+    useEffect(() => {
+        const getTasks = async () => {
+            const tasksFromDB = await fetchTasks();
+            setTasks(tasksFromDB);
+        }
+
+        getTasks();
+    }, []);
+
+    const fetchTasks = async () => {
+        const res = await fetch(DB_URL + "/tasks");
+        const data = await res.json();
+        return data;
+    };
+    
     /**
      * Sets the time started for a given task
      * @param {string} data time value that is passed from Pomodoro component
@@ -79,7 +63,7 @@ function App() {
     const handleAddTask = (task) => {
         console.log("Adding task", task);
         const id = Math.floor(Math.random() * 100);
-        const newTask = {id, ...task};
+        const newTask = { id, ...task };
         const newTasks = [...tasks, newTask];
         setTasks(newTasks);
     };
