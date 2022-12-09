@@ -78,6 +78,10 @@ function App() {
 
     const handleAddTask = (task) => {
         console.log("Adding task", task);
+        const id = Math.floor(Math.random() * 100);
+        const newTask = {id, ...task};
+        const newTasks = [...tasks, newTask];
+        setTasks(newTasks);
     };
 
     return (
