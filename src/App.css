@@ -79,6 +79,8 @@ form {
     padding: 5px 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 50%);
+
+    /* Disable text selection highlighting */
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
     -khtml-user-select: none; /* Konqueror HTML */

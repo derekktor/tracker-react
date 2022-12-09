@@ -10,7 +10,11 @@ import AddTask from "./components/AddTask";
 import Test from "./components/Test";
 
 function App() {
-    const [time, setTime] = useState("default");
+    let d = new Date();
+    let date_ = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+    let time_ = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+
+    const [time, setTime] = useState(`${date_} ${time_}`);
     const [tasks, setTasks] = useState([
         {
             id: 1,
@@ -66,10 +70,14 @@ function App() {
 
     const handleToggleActive = (id) => {
         console.log("Toggling task...", id);
-        const newTasks = tasks.map((task) => 
+        const newTasks = tasks.map((task) =>
             task.id === id ? { ...task, isActive: !task.isActive } : task
         );
-        setTasks(newTasks)
+        setTasks(newTasks);
+    };
+
+    const handleAddTask = (task) => {
+        console.log("Adding task", task);
     };
 
     return (
@@ -104,7 +112,12 @@ function App() {
                         />
                         <Route
                             path="/task/add"
-                            element={<AddTask timeStarted={time} />}
+                            element={
+                                <AddTask
+                                    onAdd={handleAddTask}
+                                    timeStarted={time}
+                                />
+                            }
                         />
                     </Routes>
                 </main>
