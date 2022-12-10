@@ -98,6 +98,10 @@ function App() {
         setTasks(newTasks);
     };
 
+    /**
+     * Performs HTTP POST request to the database and adds the given task object
+     * @param {object} task Object representing the task, with 4 fields(title, description, date created and date finished)
+     */
     const handleAddTask = async (task) => {
         console.log("Adding task", task);
 
