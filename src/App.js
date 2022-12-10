@@ -28,8 +28,20 @@ function App() {
         getTasks();
     }, []);
 
+    /**
+     * GET /tasks
+     */
     const fetchTasks = async () => {
         const res = await fetch(DB_URL + "/tasks");
+        const data = await res.json();
+        return data;
+    };
+
+    /**
+     * GET /tasks/:id
+     */
+    const fetchTask = async (id) => {
+        const res = await fetch(DB_URL + "/tasks/" + id);
         const data = await res.json();
         return data;
     };
@@ -57,10 +69,31 @@ function App() {
         setTasks(newTasks);
     };
 
-    const handleToggleActive = (id) => {
+    /**
+     * Fetches the task with the given ID
+     * Toggles the isActive field
+     * Makes PUT request to the tasks with that ID
+     * Updates the local set of tasks
+     * 
+     * @param {int} id primary key for tasks collection
+     */
+    const handleToggleActive = async (id) => {
         console.log("Toggling task...", id);
+
+        const taskToToggle = await fetchTask(id);
+        const updTask = {...taskToToggle, isActive: !taskToToggle.isActive};
+
+        const res = await fetch(DB_URL + "/tasks/" + id, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(updTask)
+        })
+        const data = await res.json();
+
         const newTasks = tasks.map((task) =>
-            task.id === id ? { ...task, isActive: !task.isActive } : task
+            task.id === id ? { ...task, isActive: data.isActive } : task
         );
         setTasks(newTasks);
     };
