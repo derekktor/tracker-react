@@ -30,6 +30,10 @@
         - 10 minutes
         - different music
         - list out things to do during break
+    - keyboard shortcuts:
+        - S - Start
+        - D - Stop
+        - F - Reset
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
