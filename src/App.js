@@ -12,18 +12,34 @@ import Test from "./components/Test";
 const DB_URL = "http://localhost:5000";
 
 function App() {
-    let d = new Date();
-    let date_ = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
-    let time_ = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+    const d = new Date();
+    const now = {
+        date: {
+            day: d.getDay(),
+            year: d.getFullYear(),
+            month: d.getMonth() - 1,
+            date: d.getDate(),
+        },
+        time: {
+            hour: d.getHours(),
+            minute: d.getMinutes(),
+            second: d.getSeconds(),
+        },
+    };
 
-    const [time, setTime] = useState(`${date_} ${time_}`);
+    // `${now.date.year + "/" + now.date.month + "/" + now.date.date} ${
+    //     now.time.hour + ":" + now.time.minute
+    // }`
+
+    const [time, setTime] = useState(now);
     const [tasks, setTasks] = useState([]);
+    const [prevTasks, setPrevTasks] = useState([]);
 
     useEffect(() => {
         const getTasks = async () => {
             const tasksFromDB = await fetchTasks();
             setTasks(tasksFromDB);
-        }
+        };
 
         getTasks();
     }, []);
@@ -45,7 +61,7 @@ function App() {
         const data = await res.json();
         return data;
     };
-    
+
     /**
      * Sets the time started for a given task
      * @param {string} data time value that is passed from Pomodoro component
@@ -63,7 +79,7 @@ function App() {
 
         await fetch(DB_URL + `/tasks/${id}`, {
             method: "DELETE",
-        })
+        });
 
         const newTasks = tasks.filter((task) => task.id !== id);
         setTasks(newTasks);
@@ -74,22 +90,22 @@ function App() {
      * Toggles the isActive field
      * Makes PUT request to the tasks with that ID
      * Updates the local set of tasks
-     * 
+     *
      * @param {int} id primary key for tasks collection
      */
     const handleToggleActive = async (id) => {
         console.log("Toggling task...", id);
 
         const taskToToggle = await fetchTask(id);
-        const updTask = {...taskToToggle, isActive: !taskToToggle.isActive};
+        const updTask = { ...taskToToggle, isActive: !taskToToggle.isActive };
 
         const res = await fetch(DB_URL + "/tasks/" + id, {
             method: "PUT",
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
             },
-            body: JSON.stringify(updTask)
-        })
+            body: JSON.stringify(updTask),
+        });
         const data = await res.json();
 
         const newTasks = tasks.map((task) =>
@@ -108,10 +124,10 @@ function App() {
         const res = await fetch(DB_URL + "/tasks", {
             method: "POST",
             headers: {
-                "Content-type": "application/json"
+                "Content-type": "application/json",
             },
-            body: JSON.stringify(task)
-        })
+            body: JSON.stringify(task),
+        });
 
         const newTask = await res.json();
 
@@ -125,7 +141,10 @@ function App() {
                 <Header />
                 <main>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route
+                            path="/"
+                            element={<Home time={time} tasks={prevTasks} />}
+                        />
                         <Route
                             path="/pomodoro"
                             element={
