@@ -57,7 +57,7 @@ const AddTask = ({ timeStarted, onAdd }) => {
                     <label>Created At:</label>
                     <input
                         type="text"
-                        value={timeStarted}
+                        // value={timeStarted}
                         readOnly
                         // onChange={(e) => setCreatedAt(e.target.value)}
                     />
@@ -79,11 +79,23 @@ const AddTask = ({ timeStarted, onAdd }) => {
 };
 
 AddTask.defaultProps = {
-    timeStarted: "2022/12/31 00:00"
+    timeStarted: {
+        date: {
+            day: 1,
+            year: 2022,
+            month: 11,
+            date: 1,
+        },
+        time: {
+            hour: 12,
+            minute: 0,
+            second: 0,
+        }
+    }
 }
 
 AddTask.propTypes = {
-    timeStarted: PropTypes.string
+    timeStarted: PropTypes.object
 }
 
 export default AddTask;
