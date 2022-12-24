@@ -1,4 +1,5 @@
 # Personal Tracker
+> /Users/mac/Desktop/prog/web/projects/tracker
 
 ## Features
 - "*home*" tab:
