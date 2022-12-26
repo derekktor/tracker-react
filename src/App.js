@@ -12,26 +12,9 @@ import Test from "./components/Test";
 const DB_URL = "http://localhost:5000";
 
 function App() {
-    const d = new Date();
-    const now = {
-        date: {
-            day: d.getDay(),
-            year: d.getFullYear(),
-            month: d.getMonth() - 1,
-            date: d.getDate(),
-        },
-        time: {
-            hour: d.getHours(),
-            minute: d.getMinutes(),
-            second: d.getSeconds(),
-        },
-    };
+    const d = new Date().toISOString();
 
-    // `${now.date.year + "/" + now.date.month + "/" + now.date.date} ${
-    //     now.time.hour + ":" + now.time.minute
-    // }`
-
-    const [time, setTime] = useState(now);
+    const [time, setTime] = useState(d);
     const [tasks, setTasks] = useState([]);
     const [prevTasks, setPrevTasks] = useState([]);
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import { format } from "date-fns";
 
 const Task = ({ task, onDelete, onToggle }) => {
     return (
@@ -15,9 +16,8 @@ const Task = ({ task, onDelete, onToggle }) => {
                 <FaTimes className="cross" onClick={() => onDelete(task.id)} />
             </div>
             <div className="flex-horizontal">
-            <p>{task.createdAt}</p>
-            <p>{task.finishedAt}</p>
-
+                <p>{format(Date.parse(task.createdAt), "MM/dd/yyyy HH:mm:ss")}</p>
+                <p>{format(Date.parse(task.finishedAt), "MM/dd/yyyy HH:mm:ss")}</p>
             </div>
         </div>
     );

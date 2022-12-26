@@ -1,15 +1,13 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React from "react";
 import { useState } from "react";
 
 const AddTask = ({ timeStarted, onAdd }) => {
-    let d = new Date();
-    let date = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
-    let time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+    let d = new Date().toISOString();
 
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
-    const finishedAt = `${date} ${time}`;
+    const finishedAt = d;
 
     const onAddTask = (e) => {
         e.preventDefault();
@@ -24,12 +22,11 @@ const AddTask = ({ timeStarted, onAdd }) => {
             return;
         }
 
-
         onAdd({ title, desc, createdAt: timeStarted, finishedAt });
 
         setTitle("");
         setDesc("");
-    }
+    };
 
     return (
         <div>
@@ -77,25 +74,5 @@ const AddTask = ({ timeStarted, onAdd }) => {
         </div>
     );
 };
-
-AddTask.defaultProps = {
-    timeStarted: {
-        date: {
-            day: 1,
-            year: 2022,
-            month: 11,
-            date: 1,
-        },
-        time: {
-            hour: 12,
-            minute: 0,
-            second: 0,
-        }
-    }
-}
-
-AddTask.propTypes = {
-    timeStarted: PropTypes.object
-}
 
 export default AddTask;
